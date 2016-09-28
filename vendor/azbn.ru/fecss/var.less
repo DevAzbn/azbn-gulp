@@ -1,0 +1,75 @@
+@fe-site:'';
+@fe-path:'./..';
+@fe-path-css:'@{fe-path}/css';
+@fe-path-img:'@{fe-path}/img/fecss';
+@fe-path-js:'@{fe-path}/js';
+
+@media-size-xs: ~"(max-width: 767px)";
+@media-size-sm: ~"(min-width: 768px) and (max-width: 991px)";
+@media-size-md: ~"(min-width: 992px) and (max-width: 1199px)";
+@media-size-lg: ~"(min-width: 1200px)";
+@media-size-portrait: ~"all and (orientation:portrait)";
+@media-size-landscape: ~"all and (orientation:landscape)";
+@media-size-retina: ~"all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-ms-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)";
+@media-size-print: ~"print";
+
+@trans-speed: 0.4s;
+
+@c-hex-w: #ffffff;
+@c-hex-b: #000000;
+@c-hex-default-h-line-bg: #999999;
+
+#fe {
+	
+	.bi(@img:'') {
+		background-image:url('@{fe-path-img}/@{img}');
+	}
+	.bg(@color:#ffffff) {
+		background-color:@color;
+	}
+	.bpos(@pos:center center) {
+		background-position:@pos;
+	}
+	.brep(@rep:no-repeat) {
+		background-repeat:@rep;
+	}
+	.bsize(@s:initial) {
+		background-size:@s;
+	}
+	
+	
+	.color(@color:#ffffff) {
+		color:@color;
+	}
+	.underline(@val:underline) {
+		text-decoration:@val;
+	}
+	.uppercase(@val:uppercase) {
+		text-transform:@val;
+	}
+	.size(@val:10px) {
+		font-size:@val;
+	}
+	.bold(@val:bold) {
+		font-weight:@val;
+	}
+	.italic(@val:italic) {
+		font-style:@val;
+	}
+	.z(@val:1) {
+		z-index:@val;
+	}
+	.lh(@val:1em) {
+		line-height:@val;
+	}
+	.ff(@val:Arial) {
+		font-family:@val;
+	}
+	.w(@val:0px) {
+		width:@val;
+	}
+	.h(@val:0px) {
+		height:@val;
+	}
+	
+}

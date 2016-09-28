@@ -1,0 +1,36 @@
+.adaptive-block {
+	
+	display:table;
+	clear:both;
+	margin-left:auto;
+	margin-right:auto;
+	
+	&.mod {
+		@import "mod.less";
+	}
+	
+	@media @media-size-xs {
+		@import "xs.less";
+	}
+	@media @media-size-sm {
+		@import "sm.less";
+	}
+	@media @media-size-md {
+		@import "md.less";
+	}
+	@media @media-size-lg {
+		@import "lg.less";
+	}
+	@media @media-size-portrait {
+		@import "portrait.less";
+	}
+	@media @media-size-landscape {
+		@import "landscape.less";
+	}
+	@media @media-size-retina {
+		@import "retina.less";
+	}
+	@media @media-size-print {
+		@import "print.less";
+	}
+}
