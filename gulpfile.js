@@ -14,6 +14,7 @@ var gulp = require('gulp'),
 	//minifyCss = require('gulp-minify-css'),
 	cleanCSS = require('gulp-clean-css'),				// минификация css
 	//myth = require('gulp-myth'),						// префиксы для css - по умолчанию не установлен
+	inlineCss = require('gulp-inline-css'),				// установка инлайновых стилей для верстки писем
 	rename = require('gulp-rename'),					// переименование файлов
 	uglify = require('gulp-uglify'),					// сжатие js
 	watch = require('gulp-watch'),						// наблюдение за изменением файловой системы
@@ -65,6 +66,7 @@ gulp.task('dev',
 	'dev:js',
 	'dev:block:less',
 	'dev:css',
+	'dev:email',
 	//'dev:img',
 ]);
 
@@ -81,6 +83,7 @@ gulp.task('server', function(){
 	gulp.watch(path.block.root + '/**/.html', ['dev:html']);
 	gulp.watch(path.block.root + '/**/*.html', ['dev:html']);
 	gulp.watch(path.src.html + '/**/*.html', ['dev:html']);
+	gulp.watch(path.src.html + '/**/*.email.html', ['dev:email']);
 	
 	gulp.watch(path.block.root + '/**/.plugin.js', ['dev:plugin:js']);
 	gulp.watch(path.block.root + '/**/body.on.js', ['dev:body.on:js']);
@@ -227,6 +230,21 @@ gulp.task('dev:block:less', function(){
 		.pipe(concat('gulp-block.less'))
 		.pipe(gulp.dest(path.build.css + '/site'))
 		//.pipe(reload({stream : true,}))
+	;
+});
+
+gulp.task('dev:email', function(){
+	return gulp.src(path.src.html + '/**/*.email.html')
+		.pipe(plumber())
+		.pipe(pagebuilder2(path.build.root))
+		.pipe(inlineCss({
+			applyStyleTags: true,
+			applyLinkTags: true,
+			removeStyleTags: true,
+			removeLinkTags: true,
+		}))
+		.pipe(gulp.dest(path.build.html))
+		.pipe(reload({stream : true,}))
 	;
 });
 
