@@ -34,9 +34,11 @@
   "dependencies": {
     "browser-sync": "^2.13.0",
     "gulp-cache": "^0.4.5",
+    "gulp-clean-css": "*",
     "gulp-imagemin": "^3.0.1",
     "gulp-less": "^3.1.0",
-    "gulp-clean-css": "*",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-pagebuilder2": "^0.1.2",
     "gulp-uglify": "^1.5.4",
     "gulp-watch": "^4.3.8",
     "optimist": "^0.6.1"

@@ -11,6 +11,7 @@ var gulp = require('gulp'),
 		reload = browserSync.reload,
 	concat = require('gulp-concat'),					// склейка файлов
 	less = require('gulp-less'),						// LESS
+	minifyCss = require('gulp-minify-css'),
 	cleanCSS = require('gulp-clean-css'),				// минификация css
 	//myth = require('gulp-myth'),						// префиксы для css - по умолчанию не установлен
 	rename = require('gulp-rename'),					// переименование файлов
@@ -202,7 +203,7 @@ gulp.task('dev:changeClass:js', function(){
 
 
 gulp.task('dev:css', function(){
-	return gulp.src(path.build.css + '/*.less')
+	return gulp.src(path.build.css + '/site.less')
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(autoprefixer({
@@ -210,6 +211,7 @@ gulp.task('dev:css', function(){
 			cascade: true,
 		}))
 		.pipe(cleanCSS())
+		//.pipe(minifyCss())
 		.pipe(gulp.dest(path.build.css))
 		.pipe(reload({stream : true,}))
 	;
