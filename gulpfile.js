@@ -104,9 +104,10 @@ gulp.task('server', function(){
 	gulp.watch(path.src.js + '/**/*.js', ['dev:js']);
 	
 	
-	gulp.watch(path.build.css + '/**/*.less', ['dev:css','dev:email']);
+	gulp.watch(path.src.css + '/**/*.less', ['dev:css','dev:email']);
 	gulp.watch(path.block.root + '/**/.less', ['dev:block:less']);
 	
+	gulp.watch(path.src._ + '/concat.block.less', ['dev:css','dev:email']);
 	
 	//gulp.watch(path.src.img + '/**/*', ['dev:img']);
 	
@@ -210,7 +211,7 @@ gulp.task('dev:changeClass:js', function(){
 
 
 gulp.task('dev:css', function(){
-	return gulp.src(path.build.css + '/*.less')
+	return gulp.src(path.src.css + '/*.less')
 		.pipe(plumber())
 		.pipe(less())
 		.pipe(autoprefixer({
@@ -228,8 +229,8 @@ gulp.task('dev:block:less', function(){
 	return gulp.src(path.block.root + '/**/.less')
 		.pipe(plumber())
 		//.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(concat('gulp-block.less'))
-		.pipe(gulp.dest(path.build.css + '/site'))
+		.pipe(concat('concat.block.less'))
+		.pipe(gulp.dest(path.src._))
 		//.pipe(reload({stream : true,}))
 	;
 });
