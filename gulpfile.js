@@ -132,7 +132,7 @@ gulp.task('dev:js', function(){
 	return gulp.src(path.src.js + '/**/*.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		//.pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest(path.build.js))
 		.pipe(reload({stream : true,}))
 	;
