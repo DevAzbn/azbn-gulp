@@ -31,6 +31,7 @@
     "gulp-pagebuilder2": "^0.2.0",
     "gulp-plumber": "*",
     "gulp-rename": "*",
+    "gulp-sass": "^2.3.2",
     "gulp-uglify": "*",
     "gulp-watch": "*",
     "optimist": "*"

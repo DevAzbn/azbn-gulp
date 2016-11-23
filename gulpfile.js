@@ -11,6 +11,7 @@ var gulp = require('gulp'),
 		reload = browserSync.reload,
 	concat = require('gulp-concat'),					// склейка файлов
 	less = require('gulp-less'),						// LESS
+	sass = require('gulp-sass'),						// SASS
 	//minifyCss = require('gulp-minify-css'),
 	cleanCSS = require('gulp-clean-css'),				// минификация css
 	//myth = require('gulp-myth'),						// префиксы для css - по умолчанию не установлен
@@ -66,7 +67,9 @@ gulp.task('dev',
 	'dev:changeClass:js',
 	'dev:js',
 	'dev:block:less',
+	'dev:block:sass',
 	'dev:css',
+	'dev:css2',
 	'dev:email',
 	//'dev:img',
 ]);
@@ -107,7 +110,11 @@ gulp.task('server', function(){
 	gulp.watch(path.src.css + '/**/*.less', ['dev:css','dev:email']);
 	gulp.watch(path.block.root + '/**/.less', ['dev:block:less']);
 	
+	gulp.watch(path.src.css + '/**/*.scss', ['dev:css2']);
+	gulp.watch(path.block.root + '/**/.scss', ['dev:block:sass']);
+	
 	gulp.watch(path.src._ + '/concat.block.less', ['dev:css','dev:email']);
+	gulp.watch(path.src._ + '/concat.block.scss', ['dev:css2']);
 	
 	//gulp.watch(path.src.img + '/**/*', ['dev:img']);
 	
@@ -225,11 +232,36 @@ gulp.task('dev:css', function(){
 	;
 });
 
+gulp.task('dev:css2', function(){
+	return gulp.src(path.src.css + '/*.scss')
+		.pipe(plumber())
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+		.pipe(autoprefixer({
+			browsers: ['> 2% in RU', 'last 4 version', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],	//last 2 versions '> 0%'
+			cascade: true,
+		}))
+		.pipe(cleanCSS())
+		//.pipe(minifyCss())
+		.pipe(gulp.dest(path.build.css))
+		.pipe(reload({stream : true,}))
+	;
+});
+
 gulp.task('dev:block:less', function(){
 	return gulp.src(path.block.root + '/**/.less')
 		.pipe(plumber())
 		//.pipe(pagebuilder2(path.build.root, fish))
 		.pipe(concat('concat.block.less'))
+		.pipe(gulp.dest(path.src._))
+		//.pipe(reload({stream : true,}))
+	;
+});
+
+gulp.task('dev:block:sass', function(){
+	return gulp.src(path.block.root + '/**/.scss')
+		.pipe(plumber())
+		//.pipe(pagebuilder2(path.build.root, fish))
+		.pipe(concat('concat.block.scss'))
 		.pipe(gulp.dest(path.src._))
 		//.pipe(reload({stream : true,}))
 	;
