@@ -1,7 +1,7 @@
 {
   "name": "azbn-gulp",
-  "version": "1.0.0",
-  "description": "0.0.0",
+  "version": "1.2.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,7 +28,7 @@
     "gulp-inline-css": "*",
     "gulp-less": "*",
     "gulp-minify-css": "*",
-    "gulp-pagebuilder2": "^0.2.0",
+    "gulp-pagebuilder2": "^0.2.1",
     "gulp-plumber": "*",
     "gulp-rename": "*",
     "gulp-sass": "^2.3.2",
