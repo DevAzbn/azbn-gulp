@@ -1,0 +1,188 @@
+	&.fe-dbg, & .fe-dbg {
+		
+		@dbg-guideline-color:rgba(0,255,127,1);
+		@c-hex-code-editable-bg: rgba(240,240,240,0.5);
+		
+		&.outline {
+			
+			@dbg-dline-w:2px;
+			@dbg-sline-w:1px;
+			@dbg-hover-sline-w:5px;
+			
+			
+			outline: @dbg-dline-w dotted red;
+			
+			* {
+				outline:@dbg-dline-w dotted green;
+				
+				&:hover {
+					outline:@dbg-hover-sline-w solid black;
+				}
+				
+				& * {
+					outline:@dbg-dline-w dotted orange;
+					
+					& * {
+						outline:@dbg-dline-w dotted blue;
+						
+						& * {
+							outline:@dbg-sline-w solid red;
+							
+							& * {
+								outline:@dbg-sline-w solid green;
+								
+								& * {
+									outline:@dbg-sline-w solid orange;
+									
+									& * {
+										outline:@dbg-sline-w solid blue;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		
+		.fecss-panel, .fecss-panel * {
+			outline:none !important;
+		}
+		
+		
+		.guide-line {
+			display:block;
+			position:absolute;
+			z-index:9999;
+			background-color:@dbg-guideline-color;
+			outline:none;
+			
+			&.h-line {
+				width:100%;
+				height:1px;
+				left:0px;
+			}
+			&.v-line {
+				width:1px;
+				height:100%;
+				top:0px;
+			}
+		}
+		
+		
+		
+		
+		
+		.dbg-bg {
+			#fe.bpos();
+			#fe.brep();
+			background-size:cover;
+			background-image:url('https://placeholdit.imgix.net/~text?txtsize=50&txt=FECSS+DBG+BG&w=500&h=500');
+		}
+		
+		.chess-bg {
+			#fe.bpos();
+			#fe.brep(repeat);
+			background-size:initial;
+			#fe.bi('chess-bg.png');
+		}
+		
+		
+		
+		/*
+		
+		div:empty, span:empty, li:empty, p:empty, td:empty, th:empty {
+			padding: 0.5em;
+			background: yellow;
+		}
+		*[style], font, center {
+			outline: 5px solid red;
+		}
+		*[class=""], *[id=""] {
+			outline: 5px dotted red;
+		}
+		img[alt=""] {
+			border: 3px dotted red;
+		}
+		img:not([alt]) {
+			border: 5px solid red;
+		}
+		img[title=""] {
+			outline: 3px dotted fuchsia;
+		}
+		img:not([title]) {
+			outline: 5px solid fuchsia;
+		}
+		table:not([summary]) {
+			outline: 5px solid red;
+		}
+		table[summary=""] {
+			outline: 3px dotted red;
+		}
+		th {
+			border: 2px solid red;
+		}
+		th[scope="col"], th[scope="row"] {
+			border: none;
+		}
+		a[href]:not([title]) {
+			border: 5px solid red;
+		}
+		a[title=""] {
+			outline: 3px dotted red;
+		}
+		a[href="#"] {
+			background: lime;
+		}
+		a[href=""] {
+			background: fuchsia;
+		}
+		
+		*/
+		
+		.fecss-panel {
+			#site.bg(@c-hex-w);
+			
+			.actions {
+				display:table;
+				vertical-align:middle;
+				
+				& > .cell {
+					display:table-cell;
+					vertical-align:middle;
+					line-height:3em;
+					min-width:8em;
+				}
+			}
+			
+			.cell {
+				
+				.hoverdown {
+					#site.bg(@c-hex-w);
+					line-height:1.5em;
+				}
+				
+			}
+		}
+		
+		.code-editable-block {
+			.code-editable {
+				display:block;
+				margin:1em auto;
+				padding:1em;
+				line-height:2em;
+				#site.bg(@c-hex-code-editable-bg);
+				#site.color(@c-hex-b);
+			}
+		}
+		
+		.preview-frame {
+			display:block;
+			border:none;
+			.mp0;
+			width:100%;
+			min-height:500px;
+		}
+		
+	}

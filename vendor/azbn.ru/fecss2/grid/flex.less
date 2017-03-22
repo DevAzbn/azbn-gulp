@@ -1,0 +1,125 @@
+	.grid.flex {
+		
+		/* http://css.yoksel.ru/flexbox/ */
+		
+		.grid-row {
+			display: inline-flex;
+			flex-direction:row;
+			flex-wrap:wrap;
+			justify-content:flex-start;
+			align-content:stretch;
+			width: 100%;
+			
+			&.inline {
+				flex-direction:row;
+			}
+			
+			&.inclmn {
+				flex-direction:column;
+			}
+			
+			&.no-wrap {
+				flex-wrap:nowrap;
+			}
+			
+			&.to-left {
+				justify-content:flex-start;
+			}
+			
+			&.to-right {
+				justify-content:flex-end;
+			}
+			
+			&.to-center {
+				justify-content:center;
+			}
+			
+			&.space-between {
+				justify-content:space-between;
+			}
+			
+			&.space-around {
+				justify-content:space-around;
+			}
+			
+			.f-box {
+				float: initial;
+				align-self:stretch;
+				//display: inline-flex;/* вероятно, надо будет удалить. патч, потреб. при одном косячке */
+				
+				&.to-top {
+					align-self:flex-start;
+				}
+				&.to-bottom {
+					align-self:flex-end;
+				}
+				&.to-center {
+					align-self:center;
+				}
+				
+			}
+			
+		}
+		
+	}
+
+@media @media-size-xs { /*xs*/
+	
+	.grid.flex {
+		
+		.grid-row {
+			
+			.f-box {
+			
+			}
+			
+		}
+		
+	}
+	
+}
+@media @media-size-sm { /*sm*/
+	
+	.grid.flex {
+		
+		.grid-row {
+			
+			.f-box {
+			
+			}
+			
+		}
+		
+	}
+	
+}
+@media @media-size-md { /*md*/
+	
+	.grid.flex {
+		
+		.grid-row {
+			
+			.f-box {
+			
+			}
+			
+		}
+		
+	}
+	
+}
+@media @media-size-lg { /*lg*/
+	
+	.grid.flex {
+		
+		.grid-row {
+			
+			.f-box {
+			
+			}
+			
+		}
+		
+	}
+	
+}
