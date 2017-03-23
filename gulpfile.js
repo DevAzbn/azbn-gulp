@@ -50,6 +50,12 @@ var path = {
 };
 
 
+var browserSyncCfg = {
+	stream : true,
+	notify : false,
+};
+
+
 gulp.task('default',
 [
 	'server',
@@ -129,7 +135,7 @@ gulp.task('dev:html', function(){
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
 		.pipe(gulp.dest(path.build.html))
-		.pipe(reload({stream : true,}))
+		.pipe(reload(browserSyncCfg))
 	;
 });
 
@@ -141,7 +147,7 @@ gulp.task('dev:js', function(){
 		.pipe(pagebuilder2(path.build.root, fish))
 		.pipe(uglify())
 		.pipe(gulp.dest(path.build.js))
-		.pipe(reload({stream : true,}))
+		.pipe(reload(browserSyncCfg))
 	;
 });
 
@@ -228,7 +234,7 @@ gulp.task('dev:css', function(){
 		.pipe(cleanCSS())
 		//.pipe(minifyCss())
 		.pipe(gulp.dest(path.build.css))
-		.pipe(reload({stream : true,}))
+		.pipe(reload(browserSyncCfg))
 	;
 });
 
@@ -243,7 +249,7 @@ gulp.task('dev:css2', function(){
 		.pipe(cleanCSS())
 		//.pipe(minifyCss())
 		.pipe(gulp.dest(path.build.css))
-		.pipe(reload({stream : true,}))
+		.pipe(reload(browserSyncCfg))
 	;
 });
 
@@ -253,7 +259,7 @@ gulp.task('dev:block:less', function(){
 		//.pipe(pagebuilder2(path.build.root, fish))
 		.pipe(concat('concat.block.less'))
 		.pipe(gulp.dest(path.src._))
-		//.pipe(reload({stream : true,}))
+		//.pipe(reload(browserSyncCfg))
 	;
 });
 
@@ -263,7 +269,7 @@ gulp.task('dev:block:sass', function(){
 		//.pipe(pagebuilder2(path.build.root, fish))
 		.pipe(concat('concat.block.scss'))
 		.pipe(gulp.dest(path.src._))
-		//.pipe(reload({stream : true,}))
+		//.pipe(reload(browserSyncCfg))
 	;
 });
 
@@ -278,7 +284,7 @@ gulp.task('dev:email', function(){
 			removeLinkTags: true,
 		}))
 		.pipe(gulp.dest(path.build.html))
-		.pipe(reload({stream : true,}))
+		.pipe(reload(browserSyncCfg))
 	;
 });
 
