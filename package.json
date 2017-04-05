@@ -18,9 +18,11 @@
   "homepage": "https://github.com/DevAzbn/azbn-gulp#readme",
   "devDependencies": {},
   "dependencies": {
+    "babel-preset-es2015": "^6.24.0",
     "browser-sync": "2.14.0",
     "gulp": "*",
     "gulp-autoprefixer": "*",
+    "gulp-babel": "^6.1.2",
     "gulp-cache": "*",
     "gulp-clean-css": "*",
     "gulp-concat": "*",
