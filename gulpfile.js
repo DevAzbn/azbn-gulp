@@ -25,6 +25,10 @@ var gulp = require('gulp'),
 	babel = require('gulp-babel'),						// транспиллер es6
 	pagebuilder2 = require('gulp-pagebuilder2');		// умный инклуд html с поддержкой вложенности и передачей параметров
 
+var babel_cfg = {
+	presets : ['es2015'],
+};
+
 var root = 'projects/' + (argv.project || 'test'),
 	src = root + '/' + 'src',
 	fish = require('./' + root + '/json/content/fish.json');
@@ -146,9 +150,7 @@ gulp.task('dev:js', function(){
 	return gulp.src(path.src.js + '/**/*.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(gulp.dest(path.build.js))
 		.pipe(reload(browserSyncCfg))
@@ -159,9 +161,7 @@ gulp.task('dev:plugin:js', function(){
 	return gulp.src(path.block.root + '/**/.plugin.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.plugin.js'))
 		.pipe(gulp.dest(path.src._))
@@ -172,9 +172,7 @@ gulp.task('dev:body.on:js', function(){
 	return gulp.src(path.block.root + '/**/body.on.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.body.on.js'))
 		.pipe(gulp.dest(path.src._))
@@ -185,9 +183,7 @@ gulp.task('dev:document-ready:js', function(){
 	return gulp.src(path.block.root + '/**/.document-ready.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.document-ready.js'))
 		.pipe(gulp.dest(path.src._))
@@ -198,9 +194,7 @@ gulp.task('dev:window-resize:js', function(){
 	return gulp.src(path.block.root + '/**/.window-resize.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.window-resize.js'))
 		.pipe(gulp.dest(path.src._))
@@ -211,9 +205,7 @@ gulp.task('dev:window-scroll:js', function(){
 	return gulp.src(path.block.root + '/**/.window-scroll.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.window-scroll.js'))
 		.pipe(gulp.dest(path.src._))
@@ -224,9 +216,7 @@ gulp.task('dev:body.changeClass:js', function(){
 	return gulp.src(path.block.root + '/**/body.changeClass.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.body.changeClass.js'))
 		.pipe(gulp.dest(path.src._))
@@ -237,9 +227,7 @@ gulp.task('dev:changeClass:js', function(){
 	return gulp.src(path.block.root + '/**/.changeClass.js')
 		.pipe(plumber())
 		.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(babel({
-			presets : ['es2015'],
-		}))
+		.pipe(babel(babel_cfg))
 		.pipe(uglify())
 		.pipe(concat('concat.changeClass.js'))
 		.pipe(gulp.dest(path.src._))
