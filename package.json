@@ -1,6 +1,6 @@
 {
   "name": "azbn-gulp",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,12 +18,14 @@
   "homepage": "https://github.com/DevAzbn/azbn-gulp#readme",
   "devDependencies": {},
   "dependencies": {
-    "browser-sync": "2.14.0",
+    "browser-sync": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-cache": "*",
+    "gulp-cheerio": "*",
     "gulp-clean-css": "*",
     "gulp-concat": "*",
+    "gulp-fontgen": "*",
     "gulp-imagemin": "*",
     "gulp-inline-css": "*",
     "gulp-less": "*",
@@ -31,7 +33,11 @@
     "gulp-pagebuilder2": "^0.2.1",
     "gulp-plumber": "*",
     "gulp-rename": "*",
+    "gulp-replace": "*",
     "gulp-sass": "^2.3.2",
+    "gulp-svg-sprite": "*",
+    "gulp-svgmin": "*",
+    "gulp-tinypng-compress": "*",
     "gulp-uglify": "*",
     "gulp-watch": "*",
     "optimist": "*"

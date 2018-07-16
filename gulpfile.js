@@ -11,7 +11,7 @@ var gulp = require('gulp'),
 		reload = browserSync.reload,
 	concat = require('gulp-concat'),					// склейка файлов
 	less = require('gulp-less'),						// LESS
-	sass = require('gulp-sass'),						// SASS
+	//sass = require('gulp-sass'),						// SASS
 	//minifyCss = require('gulp-minify-css'),
 	cleanCSS = require('gulp-clean-css'),				// минификация css
 	//myth = require('gulp-myth'),						// префиксы для css - по умолчанию не установлен
@@ -20,10 +20,18 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),					// сжатие js
 	watch = require('gulp-watch'),						// наблюдение за изменением файловой системы
 	//imagemin = require('gulp-imagemin'),				// сжатие изображений
+	tinypng = require('gulp-tinypng-compress'),			// сжатие изображений через https://tinypng.com
 	cache = require('gulp-cache'),						// кеширование
 	plumber = require('gulp-plumber'),					// отлов ошибок
-	pagebuilder2 = require('gulp-pagebuilder2');			// умный инклуд html с поддержкой вложенности и передачей параметров
-
+	pagebuilder2 = require('gulp-pagebuilder2'),		// умный инклуд html с поддержкой вложенности и передачей параметров
+	//fontgen = require('gulp-fontgen'),					// конвертация шрифтов
+	
+	//svg sprite
+	svgSprite = require('gulp-svg-sprite'),				// создание спрайта	
+	svgmin = require('gulp-svgmin'),					// минификация SVG
+	cheerio = require('gulp-cheerio'),					// удаление лишних атрибутов из svg
+	replace = require('gulp-replace');					// фиксинг багов
+	
 var root = 'projects/' + (argv.project || 'test'),
 	src = root + '/' + 'src',
 	fish = require('./' + root + '/json/content/fish.json');
@@ -35,6 +43,8 @@ var path = {
 		css : root + '/css',
 		js : root + '/js',
 		img : root + '/img',
+		fonts : root + '/fonts',
+		svg : root + '/img/svg',
 	},
 	src : {
 		root : src,
@@ -42,6 +52,8 @@ var path = {
 		css : src + '/css',
 		js : src + '/js',
 		img : src + '/img',
+		fonts : src + '/fonts',
+		svg : src + '/svg',
 		_ : src + '/_',
 	},
 	block : {
@@ -73,10 +85,13 @@ gulp.task('dev',
 	'dev:changeClass:js',
 	'dev:js',
 	'dev:block:less',
-	'dev:block:sass',
+	//'dev:block:sass',
 	'dev:css',
-	'dev:css2',
+	//'dev:css2',
 	'dev:email',
+	'dev:img',
+	//'dev:fonts',
+	'dev:svg',
 	//'dev:img',
 ]);
 
@@ -116,14 +131,15 @@ gulp.task('server', function(){
 	gulp.watch(path.src.css + '/**/*.less', ['dev:css','dev:email']);
 	gulp.watch(path.block.root + '/**/.less', ['dev:block:less']);
 	
-	gulp.watch(path.src.css + '/**/*.scss', ['dev:css2']);
-	gulp.watch(path.block.root + '/**/.scss', ['dev:block:sass']);
+	//gulp.watch(path.src.css + '/**/*.scss', ['dev:css2']);
+	//gulp.watch(path.block.root + '/**/.scss', ['dev:block:sass']);
 	
 	gulp.watch(path.src._ + '/concat.block.less', ['dev:css','dev:email']);
-	gulp.watch(path.src._ + '/concat.block.scss', ['dev:css2']);
+	//gulp.watch(path.src._ + '/concat.block.scss', ['dev:css2']);
 	
 	//gulp.watch(path.src.img + '/**/*', ['dev:img']);
-	
+	//gulp.watch(path.src.fonts + '/**/*', ['dev:fonts']);
+	gulp.watch(path.src.svg + '/**/*', ['dev:svg']);
 	
 });
 
@@ -139,7 +155,45 @@ gulp.task('dev:html', function(){
 	;
 });
 
-
+gulp.task('dev:svg', function () {
+	return gulp.src(path.src.svg + '/**/*.svg')
+	// minify svg
+		.pipe(svgmin({
+			js2svg: {
+				pretty: true,
+			}
+		}))
+		// remove all fill, style and stroke declarations in out shapes
+		.pipe(cheerio({
+			run: function ($) {
+				//$('[fill]').removeAttr('fill');
+				//$('[stroke]').removeAttr('stroke');
+				$('[style]').removeAttr('style');
+				$('[id]').removeAttr('id');
+				$('[class]').removeAttr('class');
+			},
+			parserOptions: {
+				xmlMode: true,
+			}
+		}))
+		// cheerio plugin create unnecessary string '&gt;', so replace it.
+		.pipe(replace('&gt;', '>'))
+		// build svg sprite
+		.pipe(svgSprite({
+			mode: {
+				symbol: {
+					sprite: '../sprite.svg',
+					render: {
+						less: {
+							dest: '../../../src/css/site/sprite.less',
+							template: path.src.css + '/site/sprite_template.less'
+						},
+					}
+				}
+			}
+		}))
+		.pipe(gulp.dest(path.build.svg));
+});
 
 gulp.task('dev:js', function(){
 	return gulp.src(path.src.js + '/**/*.js')
@@ -238,20 +292,20 @@ gulp.task('dev:css', function(){
 	;
 });
 
-gulp.task('dev:css2', function(){
-	return gulp.src(path.src.css + '/*.scss')
-		.pipe(plumber())
-		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-		.pipe(autoprefixer({
-			browsers: ['> 2% in RU', 'last 4 version', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],	//last 2 versions '> 0%'
-			cascade: true,
-		}))
-		.pipe(cleanCSS())
-		//.pipe(minifyCss())
-		.pipe(gulp.dest(path.build.css))
-		.pipe(reload(browserSyncCfg))
-	;
-});
+//gulp.task('dev:css2', function(){
+//	return gulp.src(path.src.css + '/*.scss')
+//		.pipe(plumber())
+//		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+//		.pipe(autoprefixer({
+//			browsers: ['> 2% in RU', 'last 4 version', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],	//last 2 versions '> 0%'
+//			cascade: true,
+//		}))
+//		.pipe(cleanCSS())
+//		//.pipe(minifyCss())
+//		.pipe(gulp.dest(path.build.css))
+//		.pipe(reload(browserSyncCfg))
+//	;
+//});
 
 gulp.task('dev:block:less', function(){
 	return gulp.src(path.block.root + '/**/.less')
@@ -263,15 +317,15 @@ gulp.task('dev:block:less', function(){
 	;
 });
 
-gulp.task('dev:block:sass', function(){
-	return gulp.src(path.block.root + '/**/.scss')
-		.pipe(plumber())
-		//.pipe(pagebuilder2(path.build.root, fish))
-		.pipe(concat('concat.block.scss'))
-		.pipe(gulp.dest(path.src._))
-		//.pipe(reload(browserSyncCfg))
-	;
-});
+//gulp.task('dev:block:sass', function(){
+//	return gulp.src(path.block.root + '/**/.scss')
+//		.pipe(plumber())
+//		//.pipe(pagebuilder2(path.build.root, fish))
+//		.pipe(concat('concat.block.scss'))
+//		.pipe(gulp.dest(path.src._))
+//		//.pipe(reload(browserSyncCfg))
+//	;
+//});
 
 gulp.task('dev:email', function(){
 	return gulp.src(path.src.html + '/**/*.email.html')
@@ -287,6 +341,24 @@ gulp.task('dev:email', function(){
 		.pipe(reload(browserSyncCfg))
 	;
 });
+
+gulp.task('dev:img', function () {
+	gulp.src(path.src.img + '/**/*.{png,jpg,jpeg}')
+		.pipe(plumber())
+		.pipe(tinypng({
+			key: 'D1yA1guKp9tcg4ShSoqOp21ctuI89G6S', //tN4hKBeysODqiZ5yNUvMcvINQn0KdEej
+			sigFile: 'images/.tinypng-sigs',
+			log: true
+		}))
+		.pipe(gulp.dest(path.build.img));
+});
+
+//gulp.task('dev:fonts', function() {
+//	return gulp
+//			.src(path.src.fonts + "/*.{ttf,otf}")
+//			.pipe(plumber())
+//			.pipe(fontgen({dest: path.build.fonts}))
+//});
 
 //
 //gulp.task('dev:img', function() {
