@@ -1,5 +1,6 @@
 _/*
 node_modules/*
 projects/*
+build/*
 !_/.gitkeep
 !projects/.gitkeep
