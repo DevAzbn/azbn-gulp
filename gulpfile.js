@@ -30,7 +30,9 @@ var gulp = require('gulp'),
 	svgSprite = require('gulp-svg-sprite'),				// создание спрайта	
 	svgmin = require('gulp-svgmin'),					// минификация SVG
 	cheerio = require('gulp-cheerio'),					// удаление лишних атрибутов из svg
-	replace = require('gulp-replace');					// фиксинг багов
+	replace = require('gulp-replace'),					// фиксинг багов
+	//vueify = require('gulp-vueify2'),					// vue
+	_;
 	
 var root = 'projects/' + (argv.project || 'test'),
 	src = root + '/' + 'src',
@@ -45,6 +47,7 @@ var path = {
 		img : root + '/img',
 		fonts : root + '/fonts',
 		svg : root + '/img/svg',
+		//vue : root + '/js/vue',
 	},
 	src : {
 		root : src,
@@ -54,6 +57,7 @@ var path = {
 		img : src + '/img',
 		fonts : src + '/fonts',
 		svg : src + '/svg',
+		vue : src + '/vue',
 		_ : src + '/_',
 	},
 	block : {
@@ -83,15 +87,17 @@ gulp.task('dev',
 	'dev:window-scroll:js',
 	'dev:body.changeClass:js',
 	'dev:changeClass:js',
+	//'dev:vue:js',
+	'dev:vuejs',
 	'dev:js',
 	'dev:block:less',
 	//'dev:block:sass',
 	'dev:css',
 	//'dev:css2',
 	'dev:email',
-	'dev:img',
+	//'dev:img',
 	//'dev:fonts',
-	'dev:svg',
+	//'dev:svg',
 	//'dev:img',
 ]);
 
@@ -139,7 +145,11 @@ gulp.task('server', function(){
 	
 	//gulp.watch(path.src.img + '/**/*', ['dev:img']);
 	//gulp.watch(path.src.fonts + '/**/*', ['dev:fonts']);
-	gulp.watch(path.src.svg + '/**/*', ['dev:svg']);
+	//gulp.watch(path.src.svg + '/**/*', ['dev:svg']);
+	
+	gulp.watch(path.src.vue + '/**/*.vue.js', ['dev:vuejs']);
+	
+	//gulp.watch(path.src.vue + '/**/*.vue', ['dev:vue:js']);
 	
 });
 
@@ -341,6 +351,38 @@ gulp.task('dev:email', function(){
 		.pipe(reload(browserSyncCfg))
 	;
 });
+
+
+gulp.task('dev:vuejs', function(){
+	return gulp.src(path.src.vue + '/**/*.vue.js')
+		.pipe(plumber())
+		.pipe(uglify())
+		.pipe(concat('vue-components.js'))
+		.pipe(gulp.dest(path.src.js))
+		.pipe(reload(browserSyncCfg))
+	;
+});
+
+
+
+gulp.task('dev:vue:js', function () {
+	gulp.src(path.src.vue + '/**/*.vue')
+		.pipe(plumber())
+		.pipe(vueify({
+			extractCSS : true,
+			CSSOut : function(file, style) {
+				//console.dir(arguments);
+			},
+		}))
+		//.pipe(uglify())
+		.pipe(concat('vue-components.js'))
+		//.pipe(gulp.dest(path.src._))
+		//.pipe(uglify())
+		.pipe(gulp.dest(path.build.js))
+		.pipe(reload(browserSyncCfg))
+	;
+});
+
 
 gulp.task('dev:img', function () {
 	gulp.src(path.src.img + '/**/*.{png,jpg,jpeg}')
