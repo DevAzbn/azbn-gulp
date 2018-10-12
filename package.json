@@ -34,7 +34,7 @@
     "gulp-plumber": "*",
     "gulp-rename": "*",
     "gulp-replace": "*",
-    "gulp-sass": "^2.3.2",
+    "gulp-sass": "*",
     "gulp-svg-sprite": "*",
     "gulp-svgmin": "*",
     "gulp-tinypng-compress": "*",
