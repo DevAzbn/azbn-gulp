@@ -2,5 +2,6 @@ _/*
 node_modules/*
 projects/*
 build/*
+package-lock.json
 !_/.gitkeep
 !projects/.gitkeep

@@ -19,7 +19,7 @@
   "devDependencies": {},
   "dependencies": {
     "browser-sync": "^2.26.0",
-    "gulp": "^4.0.0",
+    "gulp": "~3.9.1",
     "gulp-autoprefixer": "*",
     "gulp-cache": "*",
     "gulp-cheerio": "*",
